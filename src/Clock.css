@@ -1,0 +1,84 @@
+body
+{
+    font-family: sans-serif;
+
+    margin: 0;
+}
+.clock
+{
+    display: table-cell;
+
+    width: 100vw;
+    height: calc(100vh - 40px);
+    padding: 20px;
+
+    text-align: center;
+    vertical-align: middle;
+
+    color: #fff;
+}
+.clock p
+{
+    font-size: 2em;
+
+    margin: 5px 0;
+}
+.clock .time
+{
+    font-size: 4em;
+}
+.clock .date
+{
+    font-size: 1em;
+
+    margin-bottom: 1em;
+
+    text-transform: uppercase;
+
+    color: #dcdcdc;
+}
+.clock .hex-code
+{
+    font-style: italic;
+}
+@media (min-width: 768px)
+{
+    .clock p
+    {
+        font-size: 4em;
+    }
+    .clock .time
+    {
+        font-size: 8em;
+    }
+    .clock .date
+    {
+        font-size: 2em;
+
+        margin-bottom: 2em;
+    }
+}
+footer
+{
+    font-style: italic;
+
+    position: fixed;
+    bottom: 0;
+
+    display: block;
+
+    width: 100%;
+    margin-bottom: 10px;
+
+    text-align: center;
+
+    color: #d3d3d3;
+}
+footer a
+{
+    color: #fff;
+}
+footer a:hover
+{
+    color: inherit;
+}
