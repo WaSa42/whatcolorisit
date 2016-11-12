@@ -1,2 +1,3 @@
-# whatcolorisit
-A simple clock showing an hexadecimal code (20:30:42 => #203042)
+# whatcolorisit?
+A simple example of using time as an hexadecimal code for background-color style.
+![Prewiew](public/preview.png)

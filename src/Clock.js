@@ -24,7 +24,9 @@ class Clock extends Component {
         };
     }
     update() {
-        this.setState(Clock.getData());
+        const data = Clock.getData();
+        this.setState(data);
+        document.querySelector('title').text = `${data.time} - Color clock`
     }
     render() {
         return (
