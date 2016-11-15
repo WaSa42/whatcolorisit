@@ -20,7 +20,7 @@ class Clock extends Component {
         return {
             date: moment().format('LL'),
             time: moment().format('LTS'),
-            hexCode: '#' + pad(moment().hours(), 2, '0') + pad(moment().minutes(), 2, '0') + pad(moment().seconds(), 2, '0'),
+            hexCode: '#' + pad(moment().hours(), 2, '0') + pad(moment().minutes(), 2, '0') + pad(moment().seconds(), 2, '0')
         };
     }
     update() {
