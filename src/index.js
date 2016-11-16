@@ -1,8 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Clock from './Clock';
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import Clock, { reducer } from './Clock';
+
+let store = createStore(reducer);
 
 ReactDOM.render(
-  <Clock />,
+    <Provider store={store}>
+        <Clock />
+    </Provider>,
   document.getElementById('root')
 );
