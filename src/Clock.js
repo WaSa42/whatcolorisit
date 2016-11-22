@@ -5,7 +5,7 @@ import { pad } from 'underscore.string';
 import './Clock.css';
 
 // Helpers
-const getData= () => {
+const getData = () => {
     return {
         date: moment().format('LL'),
         time: moment().format('LTS'),
@@ -16,7 +16,8 @@ const getData= () => {
 // Actions
 const updateClock = () => {
     return {
-        type: 'UPDATE_CLOCK'
+        type: 'UPDATE_CLOCK',
+        data: getData()
     }
 };
 
@@ -24,13 +25,12 @@ const updateClock = () => {
 export const reducer = (state = {}, action) => {
     switch (action.type) {
         case 'UPDATE_CLOCK':
-            const data = getData();
-            document.querySelector('title').text = `${data.time} - Color clock`;
-            return Object.assign({}, state, {
-                hexCode: data.hexCode,
-                time: data.time,
-                date: data.date
-            });
+            return {
+                ...state,
+                hexCode: action.data.hexCode,
+                time: action.data.time,
+                date: action.data.date
+            }
         default:
             return state
     }
@@ -43,6 +43,9 @@ class Clock extends Component {
     }
     componentWillUnmount() {
         clearInterval(this.interval);
+    }
+    componentDidUpdate() {
+        document.querySelector('title').text = `${this.props.time} - Color clock`;
     }
     render() {
         return (
