@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux'
+
 import moment from 'moment';
 import { pad } from 'underscore.string';
+
 import './Clock.css';
 
 // Helpers
@@ -15,22 +17,55 @@ const getData = () => {
 
 // Actions
 const updateClock = () => {
+    const data = getData();
+    return dispatch => {
+        document.querySelector('title').text = `${data.time} - Color clock`;
+
+        dispatch ({
+            type: 'UPDATE_CLOCK',
+            data: data
+        })
+    };
+};
+const startClock = () => {
+    return dispatch => {
+        const interval = setInterval(() => {
+            dispatch(updateClock());
+        }, 1000);
+
+        dispatch({
+            type: 'START_CLOCK',
+            interval
+        });
+    }
+};
+const stopClock = () => {
     return {
-        type: 'UPDATE_CLOCK',
-        data: getData()
+        type: 'STOP_CLOCK'
     }
 };
 
 // Reducer
 export const reducer = (state = {}, action) => {
     switch (action.type) {
+        case 'START_CLOCK':
+            return {
+                ...state,
+                isOn: true,
+                interval: action.interval
+            };
+        case 'STOP_CLOCK':
+            clearInterval(state.interval);
+            return {
+                ...state
+            };
         case 'UPDATE_CLOCK':
             return {
                 ...state,
                 hexCode: action.data.hexCode,
                 time: action.data.time,
                 date: action.data.date
-            }
+            };
         default:
             return state
     }
@@ -39,18 +74,15 @@ export const reducer = (state = {}, action) => {
 // Component
 class Clock extends Component {
     componentDidMount() {
-        this.interval = setInterval(this.props.update.bind(this), 1000);
+        this.props.startClock();
     }
     componentWillUnmount() {
-        clearInterval(this.interval);
-    }
-    componentDidUpdate() {
-        document.querySelector('title').text = `${this.props.time} - Color clock`;
+        this.props.stopClock();
     }
     render() {
         return (
             <div className="clock" style={{'backgroundColor': this.props.hexCode}}>
-                <p className="time">{this.props.time}</p>
+                <time className="time">{this.props.time}</time>
                 <p className="date">{this.props.date}</p>
                 <p className="hex-code">{this.props.hexCode}</p>
             </div>
@@ -70,8 +102,11 @@ function mapStateToProps() {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        update: () => {
-            dispatch(updateClock())
+        startClock: () => {
+            dispatch(startClock())
+        },
+        stopClock: () => {
+            dispatch(stopClock())
         }
     }
 };
