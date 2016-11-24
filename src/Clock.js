@@ -39,9 +39,10 @@ const startClock = () => {
         });
     }
 };
-const stopClock = () => {
+const stopClock = (interval) => {
     return {
-        type: 'STOP_CLOCK'
+        type: 'STOP_CLOCK',
+        interval: clearInterval(interval)
     }
 };
 
@@ -55,9 +56,10 @@ export const reducer = (state = {}, action) => {
                 interval: action.interval
             };
         case 'STOP_CLOCK':
-            clearInterval(state.interval);
             return {
-                ...state
+                ...state,
+                isOn: false,
+                interval: null
             };
         case 'UPDATE_CLOCK':
             return {
@@ -77,7 +79,7 @@ class Clock extends Component {
         this.props.startClock();
     }
     componentWillUnmount() {
-        this.props.stopClock();
+        this.props.stopClock(this.props.interval);
     }
     render() {
         return (
